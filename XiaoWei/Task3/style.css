@@ -1,0 +1,107 @@
+body * {
+    border: 1px solid #999;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    min-width: 80px;
+    max-height: 80px;
+    margin-left: 20px;
+    margin-top: 20px;
+    order: 0;
+}
+
+.logo:last-of-type {
+    margin-bottom: 20px;
+}
+
+#main {
+    background: #eee;
+    margin: 20px;
+    padding: 20px;
+    display: flex;
+    flex-flow: row;
+}
+
+#center,
+#left,
+#right {
+    background: white;
+}
+
+#center {
+    max-height: 400px;
+    min-height: 400px;
+    margin-left: 20px;
+    margin-right: 20px;
+    flex: 3 1 60%;
+    order: 2;
+    overflow: scroll;
+}
+
+#center * {
+    border: none;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+#left {
+    min-width: 200px;
+    max-width: 200px;
+    height: 100%;
+    overflow: hidden;
+    flex: 1 6 20%;
+    order: 1;
+    display: flex;
+    flex-flow: row;
+}
+
+#left h2 {
+    border: none;
+    order: 2;
+    margin-left: 20px;
+}
+
+#right {
+    min-width: 120px;
+    max-width: 120px;
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column;
+    flex: 1 6 20%;
+    order: 3;
+}
+
+@media all and (max-width: 640px) {
+    #main {
+        flex-direction: column;
+    }
+    #left,
+    #center,
+    #right {
+        order: 0;
+    }
+    #center {
+        margin: 20px;
+        margin-left: 0px;
+        margin-right: 0px;
+        max-height: none;
+    }
+}
+
+@media all and (max-width: 300px) {
+    #left,
+    #center,
+    #right {
+        min-width: 0px;
+    }
+    #left {
+        flex-flow: column;
+    }
+    #left h2 {
+        margin-top: 0px;
+        margin-right: 20px;
+    }
+}
