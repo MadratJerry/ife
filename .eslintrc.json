@@ -14,7 +14,14 @@
     "sourceType": "module"
   },
   "rules": {
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true,
+        "semi": false,
+        "trailingComma": "all"
+      }
+    ],
     "no-console": "warn",
     "no-const-assign": "warn",
     "no-this-before-super": "warn",

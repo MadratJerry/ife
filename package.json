@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "format": "prettier --no-semi --trailing-comma all --single-quote --write ./**/*.js ./**/*.css"
+  },
   "devDependencies": {
     "browser-sync": "^2.18.8",
     "gulp": "^3.9.1"
