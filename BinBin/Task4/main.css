@@ -1,0 +1,8 @@
+.box {
+  min-width: 16px;
+  background: red;
+  color: white;
+  float: left;
+  text-align: center;
+  margin-right: 4px;
+}

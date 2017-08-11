@@ -1,0 +1,11 @@
+.box {
+  background: white;
+  display: flex;
+  border: black solid 1px;
+  margin: 4px;
+  flex: 1;
+}
+
+.select {
+  background: green;
+}

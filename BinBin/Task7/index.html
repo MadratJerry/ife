@@ -2,99 +2,38 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
-    <title>IFE JavaScript Task 07</title>
-    <style>
-        .box {
-            background: white;
-            display: flex;
-            border: black solid 1px;
-            margin: 4px;
-            flex: 1;
-        }
-
-        .select {
-            background: green;
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>IFE JavaScript Task 07</title>
+  <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-    <div style="height: 100px; width: 400px;" class="box root">
-        <div class="box">
-            <div class="box">
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
-            <div class="box">
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box">
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
-            <div class="box">
-                <div class="box"></div>
-                <div class="box"></div>
-            </div>
-        </div>
+  <div style="height: 100px; width: 400px;" class="box root">
+    <div class="box">
+      <div class="box">
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+      <div class="box">
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
     </div>
-    <button type="button" id="preOrderBtn">PreOrder</button>
-    <button type="button" id="inOrderBtn">InOrder</button>
-    <button type="button" id="postOrderBtn">PostOrder</button>
-    <script>
-        let previous = null,
-            animationOrder = [],
-            orders = ["pre", "in", "post"],
-            buttonList = [];
-
-        function preOrder(element) {
-            if (element != null) {
-                animationOrder.push(element);
-                preOrder(element.firstElementChild);
-                preOrder(element.lastElementChild);
-            }
-        }
-
-        function inOrder(element) {
-            if (element != null) {
-                preOrder(element.firstElementChild);
-                animationOrder.push(element);
-                preOrder(element.lastElementChild);
-            }
-        }
-
-        function postOrder(element) {
-            if (element != null) {
-                preOrder(element.firstElementChild);
-                preOrder(element.lastElementChild);
-                animationOrder.push(element);
-            }
-        }
-
-        function play() {
-            let top = animationOrder.pop();
-            if (previous) previous.classList.toggle("select");
-            if (top == null)
-                return;
-            top.classList.toggle("select");
-            previous = top;
-
-            setTimeout(function () {
-                play();
-            }, 1000);
-        }
-
-        orders.forEach(function (element) {
-            document.getElementById(element + "OrderBtn").addEventListener("click", () => {
-                window[element + "Order"](document.getElementsByClassName("root")[0]);
-                play();
-            });
-        }, this);
-    </script>
+    <div class="box">
+      <div class="box">
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+      <div class="box">
+        <div class="box"></div>
+        <div class="box"></div>
+      </div>
+    </div>
+  </div>
+  <button type="button" id="preOrderBtn">PreOrder</button>
+  <button type="button" id="inOrderBtn">InOrder</button>
+  <button type="button" id="postOrderBtn">PostOrder</button>
+  <script src="main.js"></script>
 </body>
 
 </html>
