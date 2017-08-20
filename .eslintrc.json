@@ -18,8 +18,7 @@
       "error",
       {
         "singleQuote": true,
-        "semi": false,
-        "trailingComma": "all"
+        "semi": false
       }
     ],
     "no-console": "warn",
