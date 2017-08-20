@@ -16,15 +16,20 @@ function GetStrLen(str) {
  */
 function ValidateForm(form) {
   let length = GetStrLen(form.name.value)
+  /** @type {HTMLOutputElement} */
+  let info = form.info
   if (length == 0) {
-    form.info.value = '名字不能为空'
+    info.value = '名字不能为空'
+    info.className = 'error'
     return false
   }
   if (length < 4 || length > 16) {
-    form.info.value = '名称长度为4～16个字符'
+    info.value = '名称长度为4～16个字符'
+    info.className = 'error'
     return false
   }
-  form.info.value = '名称格式正确'
+  info.value = '名称格式正确'
+  info.className = 'correct'
   return true
 }
 
