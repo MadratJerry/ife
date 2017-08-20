@@ -1,0 +1,16 @@
+.box {
+  background: white;
+  display: flex;
+  border: black solid 1px;
+  margin: 4px;
+  flex-flow: row wrap;
+}
+
+.select {
+  background: lightgreen;
+}
+
+i {
+  font-style: normal;
+  background: lightblue;
+}
