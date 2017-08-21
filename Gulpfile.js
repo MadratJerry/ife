@@ -7,8 +7,9 @@ gulp.task('browser-reload', function(done) {
 gulp.task('default', function() {
   browserSync.init({
     server: {
-      baseDir: './',
+      baseDir: './'
     },
+    open: false
   })
   gulp.watch(['**/*'], ['browser-reload'])
 })
