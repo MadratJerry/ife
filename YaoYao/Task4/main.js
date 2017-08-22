@@ -60,7 +60,7 @@ class Box {
    * @memberof Box
    */
   Turn(direction) {
-    this.d = (this.d + direction) % 4
+    this.d = (this.d + direction + 4) % 4
   }
 
   /**
@@ -87,7 +87,7 @@ control.innerHTML =
 let order = document.getElementById('order'),
   go = document.getElementById('orderBtn')
 
-go.addEventListener('click', _ => {
+go.addEventListener('click', () => {
   switch (order.value) {
     case 'TUN LEF':
       box.Turn(-1)

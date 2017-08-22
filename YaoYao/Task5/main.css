@@ -1,0 +1,97 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+}
+
+.container {
+  position: absolute;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tr:nth-child(1) td,
+tr td:nth-child(1) {
+  border: none;
+}
+
+td {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.box {
+  width: 50px;
+  height: 50px;
+  background: red;
+  position: absolute;
+  display: block;
+  border: 1px solid#ccc;
+}
+
+.box div {
+  background: blue;
+  border: none;
+}
+
+.TOP div {
+  width: 100%;
+  height: 10px;
+}
+
+.RIG div {
+  float: right;
+  width: 10px;
+  height: 100%;
+}
+
+.BAC div {
+  width: 100%;
+  height: 10px;
+  margin-top: 40px;
+}
+
+.LEF div {
+  float: left;
+  width: 10px;
+  height: 100%;
+}
+
+input {
+  margin-left: 50px;
+}
+
+@keyframes clockwise-90 {
+  to {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes clockwise-180 {
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes anticlockwise-90 {
+  to {
+    transform: rotate(-90deg);
+  }
+}
+
+@keyframes anticlockwise-180 {
+  to {
+    transform: rotate(-180deg);
+  }
+}
