@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 /**
  * Dynamic Data Binding
  * @class Observer
@@ -9,66 +11,37 @@ class Observer {
    * @memberof Observer
    */
   constructor(data) {
-    this.data = data
-    this.walk(data)
-  }
-  /**
-   * Recursive assignment
-   * @param {Object} value
-   * @memberof Observer
-   */
-  walk(value) {
-    Object.keys(value).forEach(key => this.convert(key, value[key]))
-  }
-  /**
-   * Convert the Object to Observer
-   * @param {String} key
-   * @param {Object} value
-   * @memberof Observer
-   */
-  convert(key, value) {
-    Observer.defineReactive(this.data, key, value)
-  }
-  /**
-   *
-   * @static
-   * @param {Object} value
-   * @returns {Observer}
-   * @memberof Observer
-   */
-  static observe(value) {
-    if (typeof value === 'object') return new Observer(value)
-  }
-  /**
-   * Bind the object getter and setter
-   * @static
-   * @param {Object} obj
-   * @param {String} key
-   * @param {Object} value
-   * @memberof Observer
-   */
-  static defineReactive(obj, key, value) {
-    let dep = new Dep()
-    Observer.observe(value)
-    Object.defineProperty(obj, key, {
-      enumerable: true,
-      configurable: true,
-      get() {
-        if (Dep.target) dep.addSub(Dep.target)
-        console.log('You visit ' + key)
-        return value
+    const self = this
+    this._emitters = {}
+    Object.keys(data).forEach(key => {
+      this._emitters[key] = new Emitter()
+      if (typeof data[key] === 'object') data[key] = new Observer(data[key])
+    })
+    return new Proxy(data, {
+      /**
+       * A trap for getting property values.
+       * @param {Object} target
+       * @param {String} property
+       * @returns
+       */
+      get(target, property) {
+        return self[property] || target[property]
       },
-      set(newValue) {
-        console.log(`You set ${key}`)
-        console.log(`New ${key} = ${newValue}`)
-        if (newValue === value) return
-        value = newValue
-        Observer.observe(newValue)
-        dep.notify()
+      /**
+       * A trap for setting property values.
+       * @param {Object} target
+       * @param {String} property
+       * @param {any} value
+       */
+      set(target, property, value) {
+        if (value !== target[property]) {
+          target[property] =
+            typeof value == 'object' ? new Observer(value) : value
+          self._emitters[property].emit()
+        }
       }
     })
   }
-
   /**
    * Add a watcher for the observer
    * @param {String} exp
@@ -76,37 +49,34 @@ class Observer {
    * @memberof Observer
    */
   $watch(exp, cb) {
-    new Watcher(this, exp, cb)
+    this._emitters[exp].addWatcher(new Watcher(this, exp, cb))
   }
 }
 
 /**
  * An observable than can have multiple
  * directives subscribing to it.
- * @class Dep
+ * @class Emitter
  */
-class Dep {
+class Emitter {
   /**
-   * Creates an instance of Dep.
-   * @memberof Dep
+   * Creates an instance of Emitter.
+   * @memberof Emitter
    */
   constructor() {
-    this.subs = []
+    /** @type {Array.<Watcher>} */
+    this.watchers = []
   }
   /**
    * Add a subscriber
    * @param {Watcher} sub
-   * @memberof Dep
+   * @memberof Emitter
    */
-  addSub(sub) {
-    this.subs.push(sub)
+  addWatcher(sub) {
+    this.watchers.push(sub)
   }
-  /**
-   * Notify the all subscriber
-   * @memberof Dep
-   */
-  notify() {
-    this.subs.forEach(sub => sub.update())
+  emit() {
+    this.watchers.forEach(watcher => watcher.update())
   }
 }
 
@@ -129,7 +99,7 @@ class Watcher {
     this.value = this.get()
   }
   /**
-   * Update value and run the callback
+   * Update the value and run the callback
    * @memberof Watcher
    */
   update() {
@@ -137,37 +107,34 @@ class Watcher {
     if (value !== this.value) {
       let preValue = this.value
       this.value = value
-      this.cb.call(this.vm.data, ...[this.value, preValue])
+      this.cb.apply(this.vm, [this.value, preValue])
     }
   }
   /**
    * Get the value
-   * @returns
+   * @returns {any}
    * @memberof Watcher
    */
   get() {
-    Dep.target = this
-    const value = this.vm.data[this.exp]
-    Dep.target = null
+    const value = this.vm[this.exp]
     return value
   }
 }
 
-let app = new Observer({
-  name: 'crazymosuethief',
-  age: 20
+let ob = new Observer({
+  name: {
+    lastName: 'a',
+    firstName: 'b'
+  },
+  age: 100
 })
 
-app.data.name = {
-  lastName: 'Hong',
-  firstName: 'Yotau'
-}
-
-app.data.name.lastName
-app.data.name.firstName = 'YO'
-
-app.$watch('age', age => {
-  console.log(`My age has changed to ${age}`)
+ob.$watch('name', function(newVal, oldVal) {
+  console.log(`Change name from ${oldVal} to ${newVal}`)
 })
 
-app.data.age = 100
+ob.name.$watch('lastName', function(newVal, oldVal) {
+  console.log(`Change lastName from ${oldVal} to ${newVal}`)
+})
+
+ob.name.lastName = 'rat'
