@@ -1,0 +1,16 @@
+[class*='col-'] {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+div [class*='col-'] {
+  height: 50px;
+  padding: 0 10px;
+  margin: 10px 0;
+}
+
+div [class*='col-'] div {
+  background-color: #eee;
+  border: 1px solid #999;
+  height: 50px;
+}
